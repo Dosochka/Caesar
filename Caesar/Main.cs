@@ -30,7 +30,7 @@ namespace Caesar
             int aNum = alfabet.Length;  // Длинна переменной alfabet типа string
             string result = ""; // Результат шифрования/дешифровки
 
-            // Контроль над ключем, 0 < key < 32, т.е его модуль
+            // Контроль над ключем: 0 < key < 32, т.е его модуль
             if (key > 32 && key < 0)
             {
                 key = key % 32;
@@ -82,13 +82,11 @@ namespace Caesar
             string input = text; // Вводимый текст
             string[] str = input.Split(new Char[] { ' ', ',', '.', ':', '!', '?', ';' }, StringSplitOptions.RemoveEmptyEntries); // Избавление от знаков препинания
 
-            // Массивы для шифрования выбранных слов
+            // Массивы для шифрования выбранных слов (несколько массивов для понимания того, что дешифровка проходит несколько раз в зависимости от результата
             string[] word = new string[32];
             string[] word2 = new string[32];
             string[] word3 = new string[32];
            
-
-
             for (int i = 0; i < str.Length; i++) // Поиск самого длинного слова (word)
             {
                 if (str[i].Length > maxlen)
@@ -145,11 +143,9 @@ namespace Caesar
                     result = key3;
                 }
             }
-
             textBox2.Text = (result).ToString();
             return result.ToString(); // Возвращаем ключ
         }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -332,6 +328,7 @@ namespace Caesar
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Сохранение регистра букв, после дешифровки
             if (textBox1.Text != "")
             {
                 textBox3.Text = "";
