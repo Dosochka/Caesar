@@ -12,14 +12,12 @@ using System.Drawing.Printing;
 
 namespace Caesar
 {
-
     public partial class Main : Form
     {
         public Main()
         {
             // Скрытие некоторых чатей интерфейса формы
             InitializeComponent();
-
         }
        
         private string Data(string text, int key) // Функция Data, которая хранит в себе основные данные
@@ -82,10 +80,8 @@ namespace Caesar
             string input = text; // Вводимый текст
             string[] str = input.Split(new Char[] { ' ', ',', '.', ':', '!', '?', ';' }, StringSplitOptions.RemoveEmptyEntries); // Избавление от знаков препинания
 
-            // Массивы для шифрования выбранных слов (несколько массивов для понимания того, что дешифровка проходит несколько раз в зависимости от результата
+            // Массив для шифрования выбранных слов
             string[] word = new string[32];
-            string[] word2 = new string[32];
-            string[] word3 = new string[32];
            
             for (int i = 0; i < str.Length; i++) // Поиск самого длинного слова (word)
             {
@@ -114,35 +110,6 @@ namespace Caesar
             }
             result = key;
 
-            // Если ключ не найден
-            if (key == 0 || key == 1)
-            {
-                word2 = WordSearch(text, word2, 5);
-                for (int i = 0; i < 32; i++)
-                {
-                    if (dictionary.Contains(word2[i]))
-                    {
-                        key2 = i;
-                        break;
-                    }
-                }
-                result = key2;
-
-                // Если и второй поиск оказался неудачным
-                if (key2 == 0 || key2 == 1)
-                {
-                    word3 = WordSearch(text, word3, 6);
-                    for (int i = 0; i < 32; i++)
-                    {
-                        if (dictionary.Contains(word3[i]))
-                        {
-                            key3 = i;
-                            break;
-                        }
-                    }
-                    result = key3;
-                }
-            }
             textBox2.Text = (result).ToString();
             return result.ToString(); // Возвращаем ключ
         }
@@ -163,13 +130,8 @@ namespace Caesar
 
             for (int i = 0; i < str.Length; i++)
             {
-                if (char.IsUpper(str[i]))
-                {
-                    m[i] = 1;
-                }
-                else {
-                    m[i] = 0;
-                }
+                if (char.IsUpper(str[i])) m[i] = 1;
+                else m[i] = 0;
             }
 
             if (textBox2.TextLength != 0 && isNum) // Проверка на ввод ключа
@@ -180,44 +142,11 @@ namespace Caesar
 
                 for(int i = 0; i < textBox1.TextLength; i++)
                 {
-                    if (m[i] == 1)
-                    {                  
-                        textBox3.Text += res[i].ToString().ToUpper();
-                    } else {
-                        textBox3.Text += res[i];
-                    }
-                    
+                    if (m[i] == 1) textBox3.Text += res[i].ToString().ToUpper();
+                    else textBox3.Text += res[i];
                 }
             }
-            else {
-                MessageBox.Show("Введите числовой ключ");
-            }
-        }
-
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-          
+            else MessageBox.Show("Введите числовой ключ");
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,10 +174,7 @@ namespace Caesar
         {
             foreach (Form f in Application.OpenForms)
             {
-                if (f.Name == "About") // Меню "О программе"
-                { 
-                    return;
-                }
+                if (f.Name == "About") return; // Меню "О программе"
             }
             About got = new About();
             got.ShowDialog();
@@ -268,57 +194,11 @@ namespace Caesar
             help.ShowDialog();
         }      
 
-        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void button4_Click(object sender, EventArgs e) // Кнопка для свапа текста между блоками
         {
             string text = textBox3.Text;
             textBox3.Text = textBox1.Text;
             textBox1.Text = text;
-        }
-
-
-        void PrintPageHandler(object sender, PrintPageEventArgs e) // Обработчик события печати
-        {
-            e.Graphics.DrawString(result, new Font("Arial", 14), Brushes.Black, 0, 0);
-        }
-
-        // текст для печати
-        private string result = "";
-
-        private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Задаем текст для печати
-            if (textBox3.Text.Length != 0)
-            {
-                result = textBox3.Text;
-
-                // Объект для печати
-                PrintDocument printDocument = new PrintDocument();
-
-                // Обработчик события печати
-                printDocument.PrintPage += PrintPageHandler;
-
-                // Диалог настройки печати
-                PrintDialog printDialog = new PrintDialog();
-
-                // Установка объекта печати для его настройки
-                printDialog.Document = printDocument;
-
-                // Если в диалоге было нажато ОК
-                if (printDialog.ShowDialog() == DialogResult.OK)
-                    printDialog.Document.Print(); // печатаем
-            } else {
-                MessageBox.Show("Поле с выводом пусто!");
-            }                       
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -341,32 +221,17 @@ namespace Caesar
 
                 for (int i = 0; i < str.Length; i++)
                 {
-                    if (char.IsUpper(str[i]))
-                    {
-                        m[i] = 1;
-                    }
-                    else {
-                        m[i] = 0;
-                    }
+                    if (char.IsUpper(str[i])) m[i] = 1;
+                    else m[i] = 0;
                 }
 
                 for (int i = 0; i < textBox1.TextLength; i++)
                 {
-                    if (m[i] == 1)
-                    {
-                        textBox3.Text += res[i].ToString().ToUpper();
-                    }
-                    else {
-                        textBox3.Text += res[i];
-                    }
+                    if (m[i] == 1) textBox3.Text += res[i].ToString().ToUpper();
+                    else textBox3.Text += res[i];
                 }
-
             }
-            else {
-                MessageBox.Show("Введите исходный текст");
-            }
-
-
+            else MessageBox.Show("Введите исходный текст");
         }
     }
 }

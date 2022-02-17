@@ -56,7 +56,6 @@
             this.label1.Size = new System.Drawing.Size(336, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Автор идеи и разработчик: Берсенев Данила";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 
@@ -77,7 +76,6 @@
             this.label2.Size = new System.Drawing.Size(35, 15);
             this.label2.TabIndex = 2;
             this.label2.Text = "test";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
